@@ -1,114 +1,63 @@
-# Panduan Pengujian Postman - Gemini Flash API
+# Panduan Pengujian Postman
 
-File koleksi Postman sudah disiapkan: `postman_collection.json`.
+File koleksi Postman yang disediakan: `postman_collection.json`.
 
----
+## Cara Import ke Postman
 
-## 📥 Cara Import File Koleksi ke Postman
+1. Buka aplikasi Postman.
+2. Klik tombol **Import** pada header kiri atas.
+3. Pilih atau drag-and-drop file `postman_collection.json`.
+4. Koleksi dengan nama **Gemini Flash API Collection** akan muncul di sidebar kiri.
 
-1. Buka aplikasi **Postman**.
-2. Klik tombol **Import** (di pojok kiri atas).
-3. Drag & drop atau pilih file:
-   `gemini-flash-api/postman_collection.json`
-4. Koleksi bernama **"Gemini Flash API Collection"** dengan 4 endpoint siap pakai akan langsung muncul di sidebar kiri Anda.
-
-> **Catatan Port:**  
-> Koleksi ini menggunakan variabel `{{base_url}}` bernilai `http://localhost:3001` (sesuai file `.env`). Pastikan server sudah berjalan dengan perintah `npm start`.
+Variabel `base_url` di koleksi disetel ke `http://localhost:3001`. Pastikan server sudah berjalan sebelum melakukan request.
 
 ---
 
-## 📝 Contoh & Langkah Manual Pengujian Tiap Endpoint
+## Konfigurasi Manual Tiap Endpoint
 
-Jika Anda ingin mengisi manual di Postman tanpa import, ikuti langkah-langkah di bawah ini:
+Jika ingin membuat request satu per satu secara manual, gunakan konfigurasi berikut:
 
----
-
-### 1. Endpoint: `/generate-text` (Slide 41)
-Mengirim pertanyaan/prompt teks biasa.
-
-- **Method**: `POST`
-- **URL**: `http://localhost:3001/generate-text`
-- **Tab Headers**:
+### 1. POST /generate-text
+- URL: `http://localhost:3001/generate-text`
+- Method: `POST`
+- Headers:
   - `Content-Type`: `application/json`
-- **Tab Body**:
-  1. Pilih opsi **raw**
-  2. Pilih dropdown di sebelah kanan: **JSON**
-  3. Masukkan contoh body berikut:
-     ```json
-     {
-       "prompt": "Jelaskan apa itu RESTful API dalam 2 kalimat ringkas."
-     }
-     ```
-- Klik **Send**
-- **Contoh Response (Status: 200 OK)**:
+- Body (raw -> JSON):
   ```json
   {
-    "result": "RESTful API adalah arsitektur antarmuka pemrograman aplikasi yang menggunakan protokol HTTP untuk pertukaran data secara terstandarisasi. Arsitektur ini memungkinkan klien dan server saling berkomunikasi dengan format umum seperti JSON secara terpisah dan fleksibel."
+    "prompt": "Jelaskan perbedaan synchronous dan asynchronous dalam pemrograman."
+  }
+  ```
+- Contoh Response:
+  ```json
+  {
+    "result": "Synchronous mengeksekusi tugas secara berurutan sehingga proses berikutnya harus menunggu..."
   }
   ```
 
 ---
 
-### 2. Endpoint: `/generate-from-image` (Slide 45)
-Mengunggah file gambar dan meminta Gemini menganalisisnya.
-
-- **Method**: `POST`
-- **URL**: `http://localhost:3001/generate-from-image`
-- **Tab Body**:
-  1. Pilih opsi **form-data**
-  2. Tambahkan key berikut:
-     | Key | Type (Dropdown di sebelah kanan key) | Value / Contoh |
-     | :--- | :--- | :--- |
-     | `image` | **File** *(klik dropdown ganti dari Text ke File)* | Klik **Select Files** dan pilih gambar (`.png`, `.jpg`) |
-     | `prompt` | **Text** | `Tolong deskripsikan apa yang ada di dalam gambar ini secara detail.` *(Opsional)* |
-- Klik **Send**
-- **Contoh Response (Status: 200 OK)**:
-  ```json
-  {
-    "result": "Gambar ini menampilkan logo seekor rubah berwarna oranye dengan tulisan Hacktiv8 di bagian bawahnya..."
-  }
-  ```
+### 2. POST /generate-from-image
+- URL: `http://localhost:3001/generate-from-image`
+- Method: `POST`
+- Body (form-data):
+  - Key: `image` | Type: `File` | Value: Pilih berkas gambar (PNG, JPG, dll)
+  - Key: `prompt` | Type: `Text` | Value: `Deskripsikan objek utama dalam gambar ini.` (opsional)
 
 ---
 
-### 3. Endpoint: `/generate-from-document` (Slide 49)
-Mengunggah dokumen PDF atau TXT dan meminta ringkasan/analisis.
-
-- **Method**: `POST`
-- **URL**: `http://localhost:3001/generate-from-document`
-- **Tab Body**:
-  1. Pilih opsi **form-data**
-  2. Tambahkan key berikut:
-     | Key | Type | Value / Contoh |
-     | :--- | :--- | :--- |
-     | `document` | **File** | Klik **Select Files** dan pilih dokumen (`.pdf`, `.txt`) |
-     | `prompt` | **Text** | `Buatkan ringkasan 3 poin utama dari dokumen ini.` *(Opsional)* |
-- Klik **Send**
-- **Contoh Response (Status: 200 OK)**:
-  ```json
-  {
-    "result": "Berikut ringkasan dokumen: \n1. Pengenalan Node.js\n2. Integrasi model Gemini\n3. Penggunaan Multer buffer."
-  }
-  ```
+### 3. POST /generate-from-document
+- URL: `http://localhost:3001/generate-from-document`
+- Method: `POST`
+- Body (form-data):
+  - Key: `document` | Type: `File` | Value: Pilih berkas dokumen (PDF atau TXT)
+  - Key: `prompt` | Type: `Text` | Value: `Buat 3 poin rangkuman dari dokumen ini.` (opsional)
 
 ---
 
-### 4. Endpoint: `/generate-from-audio` (Slide 54)
-Mengunggah file suara/audio dan meminta transkripsi.
-
-- **Method**: `POST`
-- **URL**: `http://localhost:3001/generate-from-audio`
-- **Tab Body**:
-  1. Pilih opsi **form-data**
-  2. Tambahkan key berikut:
-     | Key | Type | Value / Contoh |
-     | :--- | :--- | :--- |
-     | `audio` | **File** | Klik **Select Files** dan pilih file audio (`.mp3`, `.wav`) |
-     | `prompt` | **Text** | `Tolong buatkan transkrip percakapan audio ini.` *(Opsional)* |
-- Klik **Send**
-- **Contoh Response (Status: 200 OK)**:
-  ```json
-  {
-    "result": "Transkrip audio: Selamat pagi semuanya, selamat datang di sesi kedua pelatihan Gemini AI..."
-  }
-  ```
+### 4. POST /generate-from-audio
+- URL: `http://localhost:3001/generate-from-audio`
+- Method: `POST`
+- Body (form-data):
+  - Key: `audio` | Type: `File` | Value: Pilih berkas audio (MP3, WAV, dsb)
+  - Key: `prompt` | Type: `Text` | Value: `Buatkan transkripsi dari rekaman audio ini.` (opsional)
