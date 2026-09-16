@@ -1,0 +1,153 @@
+{
+  "info": {
+    "name": "Gemini Flash API Collection",
+    "description": "Koleksi Postman untuk pengujian 4 Endpoint REST API Gemini 2.5 Flash (Hacktiv8 Sesi 2)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3001",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Generate Text",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"prompt\": \"Jelaskan apa itu RESTful API dalam 2 kalimat singkat.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/generate-text",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "generate-text"
+          ]
+        },
+        "description": "Endpoint untuk mengirim prompt teks dan menerima respons teks dari Gemini."
+      },
+      "response": []
+    },
+    {
+      "name": "2. Generate from Image",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "image",
+              "type": "file",
+              "src": "",
+              "description": "Pilih file gambar (.jpg, .png, .webp)"
+            },
+            {
+              "key": "prompt",
+              "value": "Deskripsikan apa yang ada pada gambar ini secara rinci.",
+              "type": "text",
+              "description": "Prompt teks (opsional)"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/generate-from-image",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "generate-from-image"
+          ]
+        },
+        "description": "Endpoint multimodal untuk mengunggah gambar dan meminta Gemini menganalisisnya."
+      },
+      "response": []
+    },
+    {
+      "name": "3. Generate from Document",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "document",
+              "type": "file",
+              "src": "",
+              "description": "Pilih file dokumen (.pdf, .txt, dll)"
+            },
+            {
+              "key": "prompt",
+              "value": "Tolong buatkan ringkasan poin-poin penting dari isi dokumen ini.",
+              "type": "text",
+              "description": "Prompt teks (opsional)"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/generate-from-document",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "generate-from-document"
+          ]
+        },
+        "description": "Endpoint multimodal untuk merangkum atau mengekstrak data dari dokumen (PDF/TXT)."
+      },
+      "response": []
+    },
+    {
+      "name": "4. Generate from Audio",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "audio",
+              "type": "file",
+              "src": "",
+              "description": "Pilih file audio (.mp3, .wav, .m4a)"
+            },
+            {
+              "key": "prompt",
+              "value": "Tolong buatkan transkripsi teks dari audio berikut.",
+              "type": "text",
+              "description": "Prompt teks (opsional)"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/generate-from-audio",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "generate-from-audio"
+          ]
+        },
+        "description": "Endpoint multimodal untuk mentranskripsikan ucapan atau menganalisis file audio."
+      },
+      "response": []
+    }
+  ]
+}

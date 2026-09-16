@@ -45,7 +45,20 @@ Aplikasi ini merupakan RESTful API middleware menggunakan ExpressJS yang terinte
      ```bash
      npm run dev
      ```
-   Server akan berjalan di `http://localhost:3000`.
+   Server akan berjalan di `http://localhost:3001` (atau sesuai konfigurasi di `.env`).
+
+---
+
+## 📮 Koleksi & Panduan Postman
+
+Proyek ini sudah dilengkapi file koleksi Postman yang siap pakai:
+- **File Koleksi**: [`postman_collection.json`](./postman_collection.json)
+- **Panduan Lengkap Postman**: Lihat [`POSTMAN_GUIDE.md`](./POSTMAN_GUIDE.md)
+
+**Cara Cepat di Postman:**
+1. Buka Postman -> Klik tombol **Import**.
+2. Masukkan file `postman_collection.json`.
+3. Keempat endpoint siap langsung diuji!
 
 ---
 
